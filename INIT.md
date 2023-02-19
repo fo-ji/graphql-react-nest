@@ -111,3 +111,29 @@ async function bootstrap() {
 }
 bootstrap();
 ```
+
+### GraphQLの設定
+```sh
+$ docker-compose run --rm server yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+```
+#### ./server/src/app.module.ts
+```diff
++ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
++ import { GraphQLModule } from '@nestjs/graphql';
++ import { join } from 'path';
+
+@Module({
++   imports: [
++     GraphQLModule.forRoot<ApolloDriverConfig>({
++       driver: ApolloDriver,
++       playground: true, // MEMO: GUIを利用する
++       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
++       cors: {
++         origin: '*',
++       },
++     }),
++   ],
+})
+export class AppModule {}
+```
