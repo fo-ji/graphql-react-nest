@@ -1,0 +1,53 @@
+version: '3.8'
+
+x-common: &common
+  platform: linux/amd64
+  tty: true
+  environment:
+    NODE_ENV: development
+    DATABASE_URL: postgresql://docker:secret@db:5432/grndb?schema=public
+    TZ: Asia/Tokyo
+  volumes:
+    - .:/app
+
+services:
+  db:
+    container_name: db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: grndb
+      TZ: Asia/Tokyo
+    volumes:
+      - ./db/postgres/init.d:/docker-entrypoint-initdb.d
+      - ./db/postgres/pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  server:
+    << : *common
+    build:
+      context: .
+      dockerfile: ./dockerfiles/server/Dockerfile
+    container_name: server
+    command: yarn start:dev
+    depends_on:
+      - db
+    ports:
+      - 3300:3300
+      - 5555:5555
+
+  client:
+    << : *common
+    build:
+      context: .
+      dockerfile: ./dockerfiles/client/Dockerfile
+    container_name: client
+    command: yarn dev
+    depends_on:
+      - server
+    ports:
+      - 3000:3000
+      - 8080:8080
