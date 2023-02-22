@@ -152,3 +152,23 @@ http://localhost:3300/graphql
 ```sh
 $ docker-compose run --rm server yarn add class-validator class-transformer
 ```
+
+## STEP: 3
+### DB & Prismaの設定
+#### 接続確認
+```sh
+$ docker-compose up -d
+$ docker exec -it db sh
+$ psql -U docker grndb
+```
+
+#### Setup Prisma
+```sh
+$ docker-compose run --rm server yarn add -D prisma
+$ docker-compose run --rm server npx prisma init
+$ docker-compose run --rm server npx prisma migrate dev --name init
+$ docker exec -it server sh
+$ npx prisma studio
+$ nest g module prisma
+$ nest g service prisma --no-spec
+```

@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Task } from '@prisma/client';
 import { CreateTaskInput } from './dto/createTask.input';
-import { Task } from './models/task.model';
+import { Task as TaskModel } from './models/task.model';
 import { TaskService } from './task.service';
 
 @Resolver()
@@ -8,9 +9,9 @@ export class TaskResolver {
   constructor(private readonly taskService: TaskService) {}
 
   // MEMO: graphqlの関数であることを明示的にする必要あり
-  @Query(() => [Task], { nullable: 'items' }) // MEMO: 戻り値の型が必要（記述方法はgraphqlになる）
+  @Query(() => [TaskModel], { nullable: 'items' }) // MEMO: 戻り値の型が必要（記述方法はgraphqlになる）
   // MEMO: 第2引数はオプション。'items'を設定した場合は値がない場合から配列を返す
-  getTasks(): Task[] {
+  async getTasks(): Promise<Task[]> {
     return this.taskService.getTasks();
   }
 
@@ -23,8 +24,10 @@ export class TaskResolver {
   // ): Task {
   //   return this.taskService.createTask(name, dueDate, description);
   // }
-  @Mutation(() => Task)
-  createTask(@Args('createTaskInput') createTaskInput: CreateTaskInput): Task {
-    return this.taskService.createTask(createTaskInput);
+  @Mutation(() => TaskModel)
+  async createTask(
+    @Args('createTaskInput') createTaskInput: CreateTaskInput,
+  ): Promise<Task> {
+    return await this.taskService.createTask(createTaskInput);
   }
 }
