@@ -137,3 +137,18 @@ import { Module } from '@nestjs/common';
 })
 export class AppModule {}
 ```
+
+#### MEMO(create Resolver command)
+```sh
+$ docker-compose run --rm server nest g resolver task --no-spec
+```
+
+#### MEMO(GraphQL playground)
+```
+http://localhost:3300/graphql
+```
+
+#### MEMO(validation libs)
+```sh
+$ docker-compose run --rm server yarn add class-validator class-transformer
+```
