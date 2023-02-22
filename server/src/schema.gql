@@ -23,10 +23,20 @@ type Query {
 
 type Mutation {
   createTask(createTaskInput: CreateTaskInput!): Task!
+  updateTask(updateTaskInput: UpdateTaskInput!): Task!
+  deleteTask(id: Int!): Task!
 }
 
 input CreateTaskInput {
   name: String!
   dueDate: String!
+  description: String
+}
+
+input UpdateTaskInput {
+  id: Int!
+  name: String
+  dueDate: String
+  status: String
   description: String
 }
