@@ -172,3 +172,18 @@ $ npx prisma studio
 $ nest g module prisma
 $ nest g service prisma --no-spec
 ```
+
+## STEP: 4
+### Authの設定
+```sh
+$ docker-compose run --rm server yarn add bcrypt @types/bcrypt
+$ docker-compose run --rm server yarn add -D @types/bcrypt
+$ docker-compose run --rm server nest g module auth
+$ docker-compose run --rm server nest g resolver auth --no-spec
+$ docker-compose run --rm server nest g service auth --no-spec
+$ docker-compose run --rm server nest g service auth --no-spec
+$ docker-compose run --rm server yarn add @nestjs/passport passport passport-local
+$ docker-compose run --rm server yarn add -D @types/passport-local
+$ docker-compose run --rm server yarn add @nestjs/jwt passport-jwt
+$ docker-compose run --rm server yarn add -D @types/passport-jwt
+```
