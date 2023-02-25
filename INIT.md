@@ -193,7 +193,9 @@ $ docker-compose run --rm server yarn add -D @types/passport-jwt
 ```sh
 $ docker-compose run --rm client yarn create vite .
 $ docker-compose run --rm client yarn install
+$ docker-compose run --rm client yarn add -D vite-tsconfig-paths
 ```
+#### package.json
 ```diff
 {
   "name": "client",
@@ -218,6 +220,18 @@ $ docker-compose run --rm client yarn install
     "vite": "^4.1.0"
   }
 }
+```
+#### vite.config.ts
+```diff
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
++ import tsconfigPaths from 'vite-tsconfig-paths';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+-  plugins: [react()],
++  plugins: [react(), tsconfigPaths()],
+});
 ```
 #### install libs
 ```sh
