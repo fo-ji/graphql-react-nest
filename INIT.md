@@ -187,3 +187,45 @@ $ docker-compose run --rm server yarn add -D @types/passport-local
 $ docker-compose run --rm server yarn add @nestjs/jwt passport-jwt
 $ docker-compose run --rm server yarn add -D @types/passport-jwt
 ```
+
+## STEP: 5
+### クライアントの設定
+```sh
+$ docker-compose run --rm client yarn create vite .
+$ docker-compose run --rm client yarn install
+```
+```diff
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+-    "dev": "vite",
++    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0"
+  }
+}
+```
+#### install libs
+```sh
+$ docker exec -it client sh
+$ yarn add modern-css-reset
+$ yarn add @mui/material @emotion/react @emotion/styled
+$ yarn add @mui/icons-material
+$ yarn add react-router-dom
+$ yarn add @apollo/client graphql
+$ yarn add jwt-decode
+```
