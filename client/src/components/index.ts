@@ -3,3 +3,8 @@ export * from './NotFound';
 export * from './SignIn';
 export * from './SignUp';
 export * from './Header';
+export * from './TaskTable';
+export * from './Loading';
+export * from './AddTask';
+export * from './EditTask';
+export * from './DeleteTask';
